@@ -98,12 +98,12 @@ func (l *Lexer) Lex() (Position, Token, string) {
 				// back up and left lexInt rescan the beginning of the int.
 				startPos := l.pos
 				l.backup()
-				lit := l.LexInt()
+				lit := l.lexInt()
 				return startPos, INT, lit
 			} else if unicode.IsLetter(r) {
 				startPos := l.pos
 				l.backup()
-				lit := l.LexIdent()
+				lit := l.lexIdent()
 				return startPos, IDENT, lit
 			} else {
 				return l.pos, ILLEGAL, string(r)
@@ -125,7 +125,7 @@ func (l *Lexer) backup() {
 }
 
 // lexInt scans the input until the end of an integer and then returns the literal.
-func (l *Lexer) LexInt() string {
+func (l *Lexer) lexInt() string {
 	var lit string
 	for {
 		r, _, err := l.reader.ReadRune()
@@ -149,7 +149,7 @@ func (l *Lexer) LexInt() string {
 }
 
 // lexIdent scans the input until the end of an identifier and then returns the literal.
-func (l *Lexer) LexIdent() string {
+func (l *Lexer) lexIdent() string {
 	var lit string
 	for {
 		r, _, err := l.reader.ReadRune()
